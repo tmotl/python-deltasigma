@@ -47,7 +47,7 @@ class TestAxisLabels(unittest.TestCase):
                             np.zeros((b.shape[0] - 1,))))
         u = np.linspace(0, 0.6, 30)
         N = 1e4
-        T = np.ones((1, N))
+        T = np.ones((1, int(N)))
         maxima = np.zeros((order, len(u)))
         for i in range(len(u)):
             ui = u[i]
@@ -68,7 +68,7 @@ class TestAxisLabels(unittest.TestCase):
         # ### Calculate the state maxima
         u = np.linspace(0, umax, 30)
         N = 1e4
-        T = np.ones((N,))
+        T = np.ones((int(N),))
         maxima = np.zeros((order, len(u)))
         for i in range(len(u)):
             ui = u[i]

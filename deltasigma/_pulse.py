@@ -121,9 +121,9 @@ def pulse(S, tp=(0., 1.), dt=1., tfinal=10., nosum=False):
 
     # notice len(S[0]) is the number of outputs for us
     if not nosum: # Sum the responses due to each input set
-        y = np.zeros((np.ceil(tfinal/float(dt)) + 1, len(S[0]), nis))
+        y = np.zeros((int(np.ceil(tfinal/float(dt))) + 1, len(S[0]), nis))
     else:
-        y = np.zeros((np.ceil(tfinal/float(dt)) + 1, len(S[0]), ni))
+        y = np.zeros((int(np.ceil(tfinal/float(dt))) + 1, len(S[0]), ni))
 
     for i in range(ndac):
         n1 = int(np.round(tp[i, 0]/delta_t, 0))

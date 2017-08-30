@@ -116,8 +116,8 @@ def bilogplot(V, f0, fbin, x, y, **fmt):
             raise ValueError("The input value V should have only one" +
                              " non-unitary dimension.")
         V = V.squeeze()
-    Xl = V[f0::-1]
-    Xr = V[f0:]
+    Xl = V[int(f0)::-1]
+    Xr = V[int(f0):]
     N = V.shape[0] - 1
     fbin = abs(fbin - f0)
     fl, pl = _logsmooth2(Xl, fbin)
@@ -172,6 +172,6 @@ def _logsmooth2(X, inBin, nbin=8):
     f = ((startbin + stopbin)/2. - 1)/N
     p = np.zeros(f.shape)
     for i in range(max(f.shape)):
-        p[i] = 10*np.log10(norm(X[(startbin[i] - 1):stopbin[i]])**2 /
+        p[i] = 10*np.log10(norm(X[(int(startbin[i]) - 1):int(stopbin[i])])**2 /
                            (stopbin[i] - startbin[i] + 1))
     return f, p

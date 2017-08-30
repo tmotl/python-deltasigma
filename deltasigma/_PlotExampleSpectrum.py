@@ -84,8 +84,8 @@ def PlotExampleSpectrum(ntf, M=1, osr=64, f0=0, quadrature=False):
     # (It will be adjusted to be an fft bin)
     f = 0.3
     N = 2**12
-    f1_bin = np.round(f1*N)
-    f2_bin = np.round(f2*N)
+    f1_bin = int(np.round(f1*N))
+    f2_bin = int(np.round(f2*N))
     fin = round(((1 - f)/2*f1 + (f + 1)/2*f2) * N)
     if not quadrature:
         t = np.arange(0, N).reshape((1, -1))
@@ -100,10 +100,10 @@ def PlotExampleSpectrum(ntf, M=1, osr=64, f0=0, quadrature=False):
     spec0 = fft(v * window)/(M*N/4)
     if not quadrature:
         freq = np.linspace(0, 0.5, N/2 + 1)
-        plt.plot(freq, dbv(spec0[:N/2 + 1]), 'c', linewidth=1)
+        plt.plot(freq, dbv(spec0[:int(N/2 + 1)]), 'c', linewidth=1)
         plt.hold(True)
         spec_smoothed = circ_smooth(np.abs(spec0)**2., 16)
-        plt.plot(freq, dbp(spec_smoothed[:N/2 + 1]), 'b', linewidth=3)
+        plt.plot(freq, dbp(spec_smoothed[:int(N/2 + 1)]), 'b', linewidth=3)
         Snn = np.abs(evalTF(ntf, np.exp(2j*np.pi*freq)))**2 * 2/12*(delta/M)**2
         plt.plot(freq, dbp(Snn*NBW), 'm', linewidth=1)
         snr = calculateSNR(spec0[f1_bin:f2_bin + 1], fin - f1_bin)
@@ -128,9 +128,9 @@ def PlotExampleSpectrum(ntf, M=1, osr=64, f0=0, quadrature=False):
         plt.plot(freq, dbp(spec_smoothed), 'b', linewidth=3)
         Snn = abs(evalTF(ntf, np.exp(2j * np.pi * freq))) ** 2 * 2 / 12 * (delta / M) ** 2
         plt.plot(freq, dbp(Snn*NBW), 'm', linewidth=1)
-        snr = calculateSNR(spec0[N/2 + f1_bin:N/2 + f2_bin + 1], fin - f1_bin)
+        snr = calculateSNR(spec0[int(N/2 + f1_bin):int(N/2 + f2_bin + 1)], fin - f1_bin)
         msg = 'SQNR  =  %.1fdB\n @ A = %.1fdBFS & osr = %.0f' % \
-              (snr, dbv(spec0[N/2 + fin]), osr)
+              (snr, dbv(spec0[int(N/2 + fin)]), osr)
         if f0 >=  0:
             plt.text(f0 - 0.05, - 15, msg, horizontalalignment='right',
                      verticalalignment='bottom')
