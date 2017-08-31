@@ -58,7 +58,7 @@ def infnorm(H):
     Hval = evalTF(H, np.exp(1j*w))
     Hinf = np.max(np.abs(Hval))
     wi = np.where(np.abs(Hval) == Hinf)[0]
-
+    
     # Home in using the scipy "fminbound" function.
     # original MATLAB code:
     #   wmax = fminbnd(nabsH, w(wi)-dw, w(wi)+dw, options, H);
